@@ -1,0 +1,18 @@
+.notification {
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 5px;
+  border-color: green;
+  background-color: lightgray;
+  width: 300px;
+  margin-bottom: 12px;
+
+  font-size: 20px;
+  color: green;
+  text-align: center;
+}
+
+.error-notification {
+  border-color: red;
+  color: red;
+}
