@@ -30,10 +30,12 @@ const Blog = ({ blog, blogs, setBlogs, user }) => {
   return (
     <div className='blog-container'>
       <p className='text-hover' onClick={() => toggleVisibility()}>{blog.title} {blog.author}</p>
-      <a href={blog.url} style={showWhenVisible}>{blog.url}</a>
-      <p style={showWhenVisible}>{blog.likes} likes <button onClick={() => like()}>like</button></p>
-      <p style={showWhenVisible}>Added by {blog.user.name}</p>
-      <button style={buttonVisibility} onClick={() => remove()}>remove</button>
+      <div className='additional-info' style={showWhenVisible}>
+        <a href={blog.url}>{blog.url}</a>
+        <p>{blog.likes} likes <button onClick={() => like()}>like</button></p>
+        <p>Added by {blog.user.name}</p>
+        <button style={buttonVisibility} onClick={() => remove()}>remove</button>
+      </div>
     </div>
   )
 }
