@@ -25,7 +25,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -47,7 +47,6 @@ const App = () => {
       window.localStorage.setItem(
         'loggedUser', JSON.stringify(user)
       )
-      
       blogService.setToken(user.token)
       setUser(user)
       setUsername('')
@@ -57,17 +56,15 @@ const App = () => {
     }
   }
 
-  const handleLogout = async (event) => {
+  const handleLogout = async () => {
     window.localStorage.removeItem('loggedUser')
     setUser(null)
   }
 
   const handleBlogForm = (event) => {
     event.preventDefault()
-    const newObject = {title: title, author: author, url: url}
-    blogService.create(newObject)
-    .then(blog => setBlogs(blogs.concat(blog)))
-    .then(flashNotification(`Added: ${title} by ${author}`))
+    const newObject = { title: title, author: author, url: url }
+    blogService.create(newObject).then(blog => setBlogs(blogs.concat(blog))).then(flashNotification(`Added: ${title} by ${author}`))
 
     setTitle('')
     setAuthor('')
@@ -92,7 +89,7 @@ const App = () => {
     <form onSubmit={handleLogin}>
       <div>
         käyttäjätunnus
-          <input
+        <input
           type="text"
           value={username}
           name="Username"
@@ -101,7 +98,7 @@ const App = () => {
       </div>
       <div>
         salasana
-          <input
+        <input
           type="password"
           value={password}
           name="Password"
@@ -109,7 +106,7 @@ const App = () => {
         />
       </div>
       <button type="submit">kirjaudu</button>
-    </form>      
+    </form>
   )
 
   if (user === null) {
@@ -132,19 +129,17 @@ const App = () => {
       <Toggable buttonLabel='create new'>
         <h2>create new</h2>
         <BlogForm
-        title={title}
-        setTitle={setTitle}
-        author={author}
-        setAuthor={setAuthor}
-        url={url}
-        setUrl={setUrl}
-        handleBlogForm={handleBlogForm}
+          title={title}
+          setTitle={setTitle}
+          author={author}
+          setAuthor={setAuthor}
+          url={url}
+          setUrl={setUrl}
+          handleBlogForm={handleBlogForm}
         />
       </Toggable>
 
-      {blogs.map(blog =>
-      <Blog key={blog.id} blog={blog} />
-      )}
+      {blogs.map(blog => <Blog key={blog.id} blog={blog} /> )}
     </div>
   )
 }
