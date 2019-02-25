@@ -9,15 +9,17 @@ import Toggable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
+import useField from './hooks/index'
+
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  const title = useField('text')
+  const author = useField('text')
+  const url = useField('text')
 
   const [message, setMessage] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
@@ -65,14 +67,10 @@ const App = () => {
 
   const handleBlogForm = (event) => {
     event.preventDefault()
-    const newObject = { title: title, author: author, url: url }
+    const newObject = { title: title.value, author: author.value, url: url.value }
     blogService.create(newObject)
       .then(blog => setBlogs(blogs.concat(blog)))
-      .then(flashNotification(`Added: ${title} by ${author}`))
-
-    setTitle('')
-    setAuthor('')
-    setUrl('')
+      .then(flashNotification(`Added: ${title.value} by ${author.value}`))
   }
 
   const flashNotification = (message) => {
@@ -134,11 +132,8 @@ const App = () => {
         <h2>create new</h2>
         <BlogForm
           title={title}
-          setTitle={setTitle}
           author={author}
-          setAuthor={setAuthor}
           url={url}
-          setUrl={setUrl}
           handleBlogForm={handleBlogForm}
         />
       </Toggable>
