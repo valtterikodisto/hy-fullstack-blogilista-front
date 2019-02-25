@@ -23,8 +23,10 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
+    blogService.getAll().then(blogs => {
+      blogs.sort((a, b) => (a.likes > b.likes) ? -1 : ((b.likes > a.likes) ? 1 : 0))
       setBlogs( blogs )
+    }
     )
   }, [])
 
@@ -64,7 +66,9 @@ const App = () => {
   const handleBlogForm = (event) => {
     event.preventDefault()
     const newObject = { title: title, author: author, url: url }
-    blogService.create(newObject).then(blog => setBlogs(blogs.concat(blog))).then(flashNotification(`Added: ${title} by ${author}`))
+    blogService.create(newObject)
+      .then(blog => setBlogs(blogs.concat(blog)))
+      .then(flashNotification(`Added: ${title} by ${author}`))
 
     setTitle('')
     setAuthor('')
@@ -139,7 +143,7 @@ const App = () => {
         />
       </Toggable>
 
-      {blogs.map(blog => <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs} /> )}
+      {blogs.map(blog => <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs} user={user} /> )}
     </div>
   )
 }
